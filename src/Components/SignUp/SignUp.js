@@ -1,6 +1,8 @@
 import React from 'react';
 import "./SignUp.css";
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'; import auth from "../../firebase.init";
+import { useNavigate } from 'react-router-dom';
+import Loading from '../SignIn/Loading';
 
 const SignUp = () => {
 
@@ -8,8 +10,17 @@ const SignUp = () => {
         createUserWithEmailAndPassword,
         user,
         loading,
-        error,
+        createError,
     ] = useCreateUserWithEmailAndPassword(auth);
+    const navigate = useNavigate();
+
+    if (loading) {
+        return <Loading></Loading>
+    }
+
+    if (user) {
+        navigate("/");
+    }
 
     const handleFormSignUp = e => {
         e.preventDefault();
@@ -103,6 +114,11 @@ const SignUp = () => {
                                 />
                             </div>
                         </div>
+
+                        {/* error message section */}
+                        {
+                            createError && <p className=" text-red mt-10 text-center text-sm text-gray-500">{createError.message}</p>
+                        }
 
                         <div>
                             <button
