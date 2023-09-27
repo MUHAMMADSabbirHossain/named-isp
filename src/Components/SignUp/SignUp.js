@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./SignUp.css";
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'; import auth from "../../firebase.init";
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../SignIn/Loading';
 
 const SignUp = () => {
+
+    const [agreed, setAgreed] = useState(false);
 
     const [
         createUserWithEmailAndPassword,
@@ -115,6 +117,15 @@ const SignUp = () => {
                             </div>
                         </div>
 
+                        <div>
+                            <input onClick={() => (setAgreed(!agreed))} type="checkbox" name="terms-conditions" id="terms-conditions" />
+                            <label
+                                className={`text-sm font-medium leading-6 ${agreed ? "text-green-600" : "text-red-600"}`}
+                                htmlFor="terms-conditions"> Accept named-isp All Terms and Condition.
+                            </label>
+
+                        </div>
+
                         {/* error message section */}
                         {
                             createError && <p className=" text-red mt-10 text-center text-sm text-gray-500">{createError.message}</p>
@@ -124,9 +135,11 @@ const SignUp = () => {
                             <button
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                disabled={!agreed}
                             >
                                 Sign up
                             </button>
+
                         </div>
                     </form>
 

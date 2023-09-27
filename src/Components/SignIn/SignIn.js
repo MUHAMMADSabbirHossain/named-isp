@@ -24,13 +24,13 @@ const SignIn = () => {
     }
 
 
-    const handleFormSignIn = e => {
+    const handleFormSignIn = async e => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, password);
 
-        signInWithEmailAndPassword(email, password);
+        await signInWithEmailAndPassword(email, password);
     }
 
     return (
