@@ -10,7 +10,11 @@ const Profile = () => {
         <div>
             profile
             {
-                user && <h2>{user.email}</h2>
+
+                user && <div>
+                    <h2 className="font-semibold">{user?.displayName}</h2>
+                    <h6>User Email: {user.email}</h6>
+                </div>
 
             }
         </div>

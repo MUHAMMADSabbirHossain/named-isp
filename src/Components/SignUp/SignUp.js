@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "./SignUp.css";
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'; import auth from "../../firebase.init";
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth'; import auth from "../../firebase.init";
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../SignIn/Loading';
 
@@ -14,6 +14,7 @@ const SignUp = () => {
         loading,
         createError,
     ] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, profileError] = useUpdateProfile(auth);
     const navigate = useNavigate();
 
     if (loading) {
@@ -24,14 +25,15 @@ const SignUp = () => {
         navigate("/");
     }
 
-    const handleFormSignUp = e => {
+    const handleFormSignUp = async e => {
         e.preventDefault();
         const name = e.target.name.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(name, email, password);
 
-        createUserWithEmailAndPassword(email, password);
+        await createUserWithEmailAndPassword(email, password);
+        await updateProfile({ displayName: name });
     };
     return (
         <section>
