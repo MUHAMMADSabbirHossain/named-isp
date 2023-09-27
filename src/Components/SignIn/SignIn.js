@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import Loading from './Loading';
+import SocialInUp from '../SocialInUp/SocialInUp';
 
 const SignIn = () => {
 
@@ -117,14 +118,18 @@ const SignIn = () => {
                                 Sign in
                             </button>
                         </div>
+
+                        <p className="mt-10 text-center text-sm text-gray-500">
+                            Not a member?{' '}
+                            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                                <Link to="/signup"> Register a new account</Link>
+                            </a>
+                        </p>
+
+                        <SocialInUp></SocialInUp>
+
                     </form>
 
-                    <p className="mt-10 text-center text-sm text-gray-500">
-                        Not a member?{' '}
-                        <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                            <Link to="/signup"> Register a new account</Link>
-                        </a>
-                    </p>
                 </div>
             </div>
         </section>

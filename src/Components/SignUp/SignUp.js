@@ -4,6 +4,7 @@ import { useCreateUserWithEmailAndPassword, useSendPasswordResetEmail, useUpdate
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../SignIn/Loading';
 import { useRef } from 'react';
+import SocialInUp from '../SocialInUp/SocialInUp';
 
 const SignUp = () => {
 
@@ -151,14 +152,18 @@ const SignUp = () => {
                             </button>
 
                         </div>
+
+                        <p className="mt-10 text-center text-sm text-gray-500">
+                            Already have an account?{' '}
+                            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                                <Link to="/signin">Login in Now</Link>
+                            </a>
+                        </p>
+
+                        <SocialInUp></SocialInUp>
+
                     </form>
 
-                    <p className="mt-10 text-center text-sm text-gray-500">
-                        Already have an account?{' '}
-                        <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                            <Link to="/signin">Login in Now</Link>
-                        </a>
-                    </p>
                 </div>
             </div>
         </section>
