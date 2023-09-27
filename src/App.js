@@ -6,6 +6,7 @@ import Home from "./Components/Home/Home";
 import NotFound from "./Components/NotFound/NotFound";
 import SignIn from "./Components/SignIn/SignIn";
 import SignUp from './Components/SignUp/SignUp';
+import NavigationBar from './Components/NavigationBar/NavigationBar';
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
           Learn React
         </a>
       </header> */}
+
+
+      {/* navigation bar */}
+      <NavigationBar></NavigationBar>
 
 
       {/* react route section */}
