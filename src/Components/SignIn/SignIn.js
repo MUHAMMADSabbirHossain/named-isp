@@ -10,7 +10,7 @@ const SignIn = () => {
 
     const emailRef = useRef();
     const location = useLocation();
-    let from = location.state?.from.pathname || "/";
+    let from = location.state?.from?.pathname || "/";
 
     const [
         signInWithEmailAndPassword,

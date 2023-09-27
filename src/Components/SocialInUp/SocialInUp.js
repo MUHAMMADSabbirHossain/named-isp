@@ -2,7 +2,7 @@ import React from 'react';
 import "./SocialInUp.css";
 import auth from '../../firebase.init';
 import { useSignInWithFacebook, useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import Loading from '../SignIn/Loading';
 
 const SocialInUp = () => {
@@ -11,13 +11,16 @@ const SocialInUp = () => {
     const [signInWithGithub, githubUser, githubLoading, githubError] = useSignInWithGithub(auth);
     const [signInWithGoogle, gooleUser, gooleLoading, gooleError] = useSignInWithGoogle(auth);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    let from = location.state?.from?.pathname || "/";
 
     if (facebookLoading || githubLoading || gooleLoading) {
         <Loading></Loading>
     }
 
     if (facebookUser || githubUser || gooleUser) {
-        navigate("/");
+        return navigate(from, { replace: true })
     }
 
     return (
