@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import "./SignIn.css";
 import { Link, useNavigate } from 'react-router-dom';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import Loading from './Loading';
 
 const SignIn = () => {
+
+    const emailRef = useRef();
 
     const [
         signInWithEmailAndPassword,
@@ -13,6 +15,9 @@ const SignIn = () => {
         loading,
         SignInError,
     ] = useSignInWithEmailAndPassword(auth);
+    const [sendPasswordResetEmail, sending, resetEerror] = useSendPasswordResetEmail(
+        auth
+    );
     const navigate = useNavigate();
 
     if (loading) {
@@ -71,6 +76,7 @@ const SignIn = () => {
                                     autoComplete="email"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2"
+                                    ref={emailRef}
                                 />
                             </div>
                         </div>
@@ -81,7 +87,7 @@ const SignIn = () => {
                                     Password
                                 </label>
                                 <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                                    <a onClick={() => sendPasswordResetEmail(emailRef.current.value)} href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                                         Forgot password?
                                     </a>
                                 </div>
