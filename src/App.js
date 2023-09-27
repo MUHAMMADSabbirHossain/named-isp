@@ -1,5 +1,11 @@
 // import logo from './logo.svg';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Footer from './Components/Footer/Footer';
+import Home from "./Components/Home/Home";
+import NotFound from "./Components/NotFound/NotFound";
+import SignIn from "./Components/SignIn/SignIn";
+import SignUp from './Components/SignUp/SignUp';
 
 function App() {
   return (
@@ -18,6 +24,19 @@ function App() {
           Learn React
         </a>
       </header> */}
+
+
+      {/* react route section */}
+      <Routes>
+        <Route path="/" element={<Home></Home>}></Route>
+        <Route path="/signin" element={<SignIn></SignIn>}></Route>
+        <Route path="/signup" element={<SignUp></SignUp>}></Route>
+        <Route path="*" element={<NotFound></NotFound>}></Route>
+      </Routes>
+
+
+      {/* footer section */}
+      <Footer></Footer>
     </div>
   );
 }
