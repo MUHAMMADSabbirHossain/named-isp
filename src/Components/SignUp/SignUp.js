@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import "./SignUp.css";
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth'; import auth from "../../firebase.init";
+import { useCreateUserWithEmailAndPassword, useSendPasswordResetEmail, useUpdateProfile } from 'react-firebase-hooks/auth'; import auth from "../../firebase.init";
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../SignIn/Loading';
+import { useRef } from 'react';
 
 const SignUp = () => {
 
+    const emailRef = useRef();
     const [agreed, setAgreed] = useState(false);
 
     const [
@@ -15,9 +17,12 @@ const SignUp = () => {
         createError,
     ] = useCreateUserWithEmailAndPassword(auth);
     const [updateProfile, updating, profileError] = useUpdateProfile(auth);
+    const [sendPasswordResetEmail, sending, resetEerror] = useSendPasswordResetEmail(
+        auth
+    );
     const navigate = useNavigate();
 
-    if (loading) {
+    if (loading || updating || sending) {
         return <Loading></Loading>
     }
 
@@ -35,6 +40,8 @@ const SignUp = () => {
         await createUserWithEmailAndPassword(email, password);
         await updateProfile({ displayName: name });
     };
+
+
     return (
         <section>
             sign up
@@ -91,6 +98,7 @@ const SignUp = () => {
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2"
                                     placeholder=" Enter your Email"
+                                    ref={emailRef}
                                 />
                             </div>
                         </div>
@@ -101,7 +109,7 @@ const SignUp = () => {
                                     Password
                                 </label>
                                 <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                                    <a onClick={() => sendPasswordResetEmail(emailRef.current.value)} href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                                         Forgot password?
                                     </a>
                                 </div>
@@ -130,7 +138,7 @@ const SignUp = () => {
 
                         {/* error message section */}
                         {
-                            createError && <p className=" text-red mt-10 text-center text-sm text-gray-500">{createError.message}</p>
+                            (createError || profileError || resetEerror) && <p className=" text-red mt-10 text-center text-sm text-gray-500">{createError?.message}{profileError?.message}{resetEerror.message}</p>
                         }
 
                         <div>
