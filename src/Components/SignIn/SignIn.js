@@ -1,11 +1,41 @@
 import React from 'react';
 import "./SignIn.css";
+import { Link, useNavigate } from 'react-router-dom';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import Loading from './Loading';
 
 const SignIn = () => {
+
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        SignInError,
+    ] = useSignInWithEmailAndPassword(auth);
+    const navigate = useNavigate();
+
+    if (loading) {
+        return <Loading></Loading>
+    }
+
+    if (user) {
+        navigate("/");
+    }
+
+
+    const handleFormSignIn = e => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        console.log(email, password);
+
+        signInWithEmailAndPassword(email, password);
+    }
+
     return (
         <section>
             sign in
-
 
             {/*
     This example requires updating your template:
@@ -23,12 +53,12 @@ const SignIn = () => {
                         alt="Your Company"
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Sign in to your account
+                        Login to your account
                     </h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST">
+                    <form onSubmit={handleFormSignIn} className="space-y-6" action="#" method="POST">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -40,7 +70,7 @@ const SignIn = () => {
                                     type="email"
                                     autoComplete="email"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2"
                                 />
                             </div>
                         </div>
@@ -63,10 +93,15 @@ const SignIn = () => {
                                     type="password"
                                     autoComplete="current-password"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2"
                                 />
                             </div>
                         </div>
+
+                        {/* error message section */}
+                        {
+                            SignInError && <p className=" text-red mt-10 text-center text-sm text-gray-500">{SignInError.message}</p>
+                        }
 
                         <div>
                             <button
@@ -81,7 +116,7 @@ const SignIn = () => {
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Not a member?{' '}
                         <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                            Start a 14 day free trial
+                            <Link to="/signup"> Register a new account</Link>
                         </a>
                     </p>
                 </div>

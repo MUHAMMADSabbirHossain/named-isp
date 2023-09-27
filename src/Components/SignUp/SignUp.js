@@ -1,7 +1,7 @@
 import React from 'react';
 import "./SignUp.css";
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth'; import auth from "../../firebase.init";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../SignIn/Loading';
 
 const SignUp = () => {
@@ -131,9 +131,9 @@ const SignUp = () => {
                     </form>
 
                     <p className="mt-10 text-center text-sm text-gray-500">
-                        Not a member?{' '}
+                        Already have an account?{' '}
                         <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                            Start a 14 day free trial
+                            <Link to="/signin">Login in Now</Link>
                         </a>
                     </p>
                 </div>
