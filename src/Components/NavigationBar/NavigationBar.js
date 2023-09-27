@@ -3,9 +3,11 @@ import "./NavigationBar.css";
 
 const NavigationBar = () => {
     return (
-        <div>
+        <nav>
             navigation bar
-        </div>
+
+
+        </nav>
     );
 };
 
