@@ -3,9 +3,9 @@ import "./Footer.css";
 
 const Footer = () => {
     return (
-        <div>
-            footer
-        </div>
+        <footer className='text-center mt-5'>
+            <p><small>copyright &copy; {(new Date().getFullYear())}</small></p>
+        </footer>
     );
 };
 

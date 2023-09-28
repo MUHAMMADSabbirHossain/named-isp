@@ -9,6 +9,7 @@ import SignUp from './Components/SignUp/SignUp';
 import NavigationBar from './Components/NavigationBar/NavigationBar';
 import Profile from './Components/Profile/Profile';
 import RequireAuth from './Components/RequireAuth/RequireAuth';
+import About from "./Components/About/About";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
       {/* react route section */}
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>
+        <Route path="/about" element={<About></About>}></Route>
         <Route path="/profile" element={<RequireAuth><Profile></Profile></RequireAuth>}></Route>
         <Route path="/signin" element={<SignIn></SignIn>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
